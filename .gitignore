@@ -162,6 +162,8 @@ fabric.properties
 # End of https://www.gitignore.io/api/intellij+all
 
 # Do not track test planning
-planning.xls
+*.xls
 # Do not track the database config
 db.cnf
+# Do not track docker image for testing
+biest-planner-image

@@ -1,0 +1,58 @@
+{% extends 'template.html' %}
+{% load isinstructor %}
+{% block content %}
+    <h3>Planning</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th width="100px">Datum</th>
+            <th>ResNo</th>
+            <th>Start</th>
+            <th>Eind</th>
+            <th>Relatie</th>
+            <th>Aantal</th>
+            <th>Artikel</th>
+            <th>Info</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>
+                    {{ booking.datum|date:"d-m-Y" }}
+                </td>
+                <td>
+                    {% if booking.resno %}
+                        {{ booking.resno }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ booking.start|date:"H:i" }}
+                </td>
+                <td>
+                    {{ booking.eind|date:"H:i" }}
+                </td>
+                <td>
+                    {% if booking.relatie %}
+                        {{ booking.relatie }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ booking.aantal }}
+                </td>
+                <td>
+                    <div class="{{ booking.artikel|isinstructor }}">
+                         {{ booking.artikel }}
+                    </div>
+                </td>
+                <td>
+                    {% if booking.relatie %}
+                        {{ booking.info }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
