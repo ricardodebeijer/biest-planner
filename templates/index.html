@@ -2,8 +2,15 @@
 {% load isinstructor %}
 {% block content %}
     <h3>Planning</h3>
+    <div class="col-md-6">
+        {% include 'widgets/planning_upload.html' %}
+    </div>
+    <div class="col-md-6">
+        <input onkeyup="filterFunctionPlanning()" class="form-control" id="planningsearch"
+               placeholder="Search...">
+    </div>
 
-    <table class="table">
+    <table class="table table-hover" id="planningtable">
         <thead>
         <tr>
             <th width="100px">Datum</th>
@@ -43,7 +50,7 @@
                 </td>
                 <td>
                     <div class="{{ booking.artikel|isinstructor }}">
-                         {{ booking.artikel }}
+                        {{ booking.artikel }}
                     </div>
                 </td>
                 <td>
@@ -55,4 +62,34 @@
         {% endfor %}
         </tbody>
     </table>
+    <script>
+        function filterFunctionPlanning() {
+            // Declare variables
+            var input, filter, table, tr, i;
+            input = document.getElementById("planningsearch");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("planningtable");
+            trs = table.getElementsByTagName("tr");
+
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < trs.length; i++) {
+                tds = trs[i].getElementsByTagName("td");
+                found = false;
+                for (i2 = 0; i2 < tds.length; i2++) {
+                    td = tds[i2];
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                    }
+                }
+                if (found) {
+                    trs[i].style.display = "";
+                } else {
+                    trs[i].style.display = "none";
+                }
+            }
+
+
+        }
+    </script>
 {% endblock %}

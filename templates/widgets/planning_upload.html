@@ -1,0 +1,9 @@
+<form method="post" enctype="multipart/form-data" action="{% url 'upload_planning' %}">
+    {% csrf_token %}
+    <div style="float: left;">
+        <input type="file" class="btn btn-primary btn-biest" placeholder="Planning" name="planning"/>
+    </div>
+    <div style="float: left;">
+        <button class="btn btn-primary btn-biest" type="submit">Upload</button>
+    </div>
+</form>

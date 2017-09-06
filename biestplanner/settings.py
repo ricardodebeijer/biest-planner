@@ -62,6 +62,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -129,3 +130,6 @@ STATIC_ROOT = os.path.join(PACKAGE_ROOT, 'biestplanner', 'static', 'static_root'
 STATICFILES_DIRS = (
     os.path.join(PACKAGE_ROOT, 'biestplanner', 'static', 'static_dirs'),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PACKAGE_ROOT, 'media')

@@ -1,15 +1,23 @@
 import datetime
+import os
+
 import xlrd
 from xlrd import xldate_as_tuple
 
+from biestplanner import settings
+
 book_date_format = None
 bookings = None
-last_relatie =  None
+last_relatie = None
+
 
 def getbookings():
     global bookings
     bookings = []
-    book = xlrd.open_workbook("planning.xls")
+    path = settings.MEDIA_ROOT + '/plannings/' + 'planning.xls'
+    if not os.path.exists(path):
+        return bookings
+    book = xlrd.open_workbook(path)
     global book_date_format
     book_date_format = book.datemode
     sh = book.sheet_by_index(0)
@@ -86,7 +94,7 @@ def get_relatie(cell):
 
 
 def get_info(cell):
-    #print('info type:' + str(cell.ctype))
+    # print('info type:' + str(cell.ctype))
     if cell.ctype == xlrd.XL_CELL_NUMBER:
         return None
     else:

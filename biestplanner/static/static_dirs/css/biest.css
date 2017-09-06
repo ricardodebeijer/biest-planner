@@ -43,22 +43,31 @@ body {
     color: white;
 }
 
-.navbar-inverse>.navbar-brand{
+.navbar-inverse > .navbar-brand {
     color: white;
 }
 
-.navbar-inverse>.navbar-brand:hover {
+.navbar-inverse > .navbar-brand:hover {
     color: black;
 }
 
-
-.artikel-yellow{
+.artikel-yellow {
     background-color: #fff5cd;
 }
 
-.artikel-red{
+.artikel-red {
     background-color: #ffd1d6;
 }
-.artikel-none{
 
+.artikel-none {
+
+}
+
+.btn-biest {
+    background-color: #004c00;
+    border-color: #004c00;
+}
+.btn-biest:hover {
+    background-color: #006800;
+    border-color: #006800;
 }
