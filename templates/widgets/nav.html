@@ -15,18 +15,33 @@
 
             <ul class="nav navbar-nav">
 
-                <li>
-                    {#                    <a href="{% url 'index' %}">#}
-                    {#                        <span class="glyphicon glyphicon-list"></span> Home#}
-                    {#                    </a>#}
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'index' %}">
+                            <span class="glyphicon glyphicon-list"></span> Upload Planning
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    {#                    <a href="{% url 'index' %}">#}
-                    {#                        <span class="glyphicon glyphicon-log-in"></span> Account#}
-                    {#                    </a>#}
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'index' %}">
+                            <span class="glyphicon glyphicon-user"></span> {{ request.user.username }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout_user' %}">
+                            <span class="glyphicon glyphicon-log-out"></span> Logout
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'login_user' %}">
+                            <span class="glyphicon glyphicon-log-in"></span> Login
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

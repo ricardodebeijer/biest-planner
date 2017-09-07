@@ -20,4 +20,7 @@ from biest import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^upload-planning/$', views.upload_planning, name='upload_planning'),
+
+    url(r'^login/$', views.login_user, name='login_user'),
+    url(r'^logout/$', views.logout_user, name='logout_user'),
 ]
