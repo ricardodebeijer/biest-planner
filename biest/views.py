@@ -4,16 +4,17 @@ from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 
 from biest.filesaver import save_planning
-from biest.parser import getbookings
+from biest.parser import get_bookings, get_instructors
 
 
 @login_required
 def index(request):
-    bookings = getbookings()
     context = {
-        'bookings': bookings,
+        'bookings': get_bookings(),
+        'instructors': get_instructors(),
     }
     return render(request, 'index.html', context)
+
 
 @login_required
 def upload_planning(request):
@@ -23,7 +24,9 @@ def upload_planning(request):
             save_planning(planning)
         except MultiValueDictKeyError:
             pass
-    return redirect('index')
+        return redirect('index')
+    else:
+        return render(request, 'import.html')
 
 
 def login_user(request):
@@ -46,4 +49,3 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return render(request, 'login.html')
-

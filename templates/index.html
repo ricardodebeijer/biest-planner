@@ -2,10 +2,19 @@
 {% load isinstructor %}
 {% block content %}
     <h3>Planning</h3>
-    <div class="col-md-6">
-        {% include 'widgets/planning_upload.html' %}
+    <div class="col-md-5">
+        <select name="instructors" id="preferredinstructorinput" class="form-control">
+            <option value="none">Kies een instructeur</option>
+            {% for instructor in instructors %}
+                <option value="{{ instructor }}">{{ instructor }}</option>
+            {% endfor %}
+            <option value="singlewordtoreplace">singlewordtoreplace</option>
+        </select>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2">
+        <input type="checkbox" class="form-control" id="toggleshowall" name="showall"> Toon iedereen
+    </div>
+    <div class="col-md-5">
         <input onkeyup="filterFunctionPlanning()" class="form-control" id="planningsearch"
                placeholder="Search...">
     </div>
@@ -54,7 +63,7 @@
                     </div>
                 </td>
                 <td>
-                    {% if booking.relatie %}
+                    {% if booking.info %}
                         {{ booking.info }}
                     {% endif %}
                 </td>
@@ -63,6 +72,74 @@
         </tbody>
     </table>
     <script>
+        $(function () {
+            var preferredInstructor = readPreferredInstructor();
+            var showAllInstructors = readShowAllInstructors();
+            console.log('bij ophalen: ' + preferredInstructor);
+            console.log('bij ophalen2: ' + showAllInstructors);
+            if (preferredInstructor === null) {
+                preferredInstructor = 'none'
+            }
+            if (showAllInstructors === null) {
+                showAllInstructors = true;
+            }
+            setSelectValue(preferredInstructor);
+            setCheckboxValue(showAllInstructors);
+            checkToFilterSelf();
+        });
+
+        function readPreferredInstructor() {
+            return localStorage.getItem('preferredInstructor');
+        }
+
+        function readShowAllInstructors() {
+            return localStorage.getItem('showAllInstructors');
+        }
+
+        function setCheckboxValue(input) {
+            var checkbox = $("#toggleshowall");
+            var current = checkbox.prop('checked');
+            if (current !== input) {
+                checkbox.prop('checked', input);
+            }
+        }
+
+        function setSelectValue(input) {
+            $("#preferredinstructorinput").val(input);
+        }
+
+        function checkToFilterSelf() {
+            var showAll = $("#toggleshowall").prop('checked');
+            if (!showAll) {
+                $('#planningsearch').val($("#preferredinstructorinput").val()).keyup();
+            }else{
+                 $('#planningsearch').val('').keyup();
+            }
+        }
+
+        $("#preferredinstructorinput")
+            .change(function () {
+                var input = $("#preferredinstructorinput").val();
+                writePreferredInstructor(input);
+                checkToFilterSelf();
+
+            });
+
+        $("#toggleshowall")
+            .change(function () {
+                var input = $("#toggleshowall").prop('checked');
+                writeShowAllInstructors(input);
+                checkToFilterSelf();
+            });
+
+        function writeShowAllInstructors(input) {
+            localStorage.setItem('showAllInstructors', input);
+        }
+
+        function writePreferredInstructor(input) {
+            localStorage.setItem('preferredInstructor', input);
+        }
+
         function filterFunctionPlanning() {
             // Declare variables
             var input, filter, table, tr, i;
@@ -73,7 +150,7 @@
 
 
             // Loop through all table rows, and hide those who don't match the search query
-            for (i = 0; i < trs.length; i++) {
+            for (i = 1; i < trs.length; i++) {
                 tds = trs[i].getElementsByTagName("td");
                 found = false;
                 for (i2 = 0; i2 < tds.length; i2++) {
