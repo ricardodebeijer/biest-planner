@@ -1,0 +1,6 @@
+# Build and push image
+sudo docker build -t ricardodebeijer/django-biest-planner .
+sudo docker push registry.ricardodebeijer.nl/ricardodebeijer/django-biest-planner
+# ssh to server
+ssh ricardo@192.168.1.5 "bash /home/ricardo/Documents/Docker/runBiestplanner"
+
